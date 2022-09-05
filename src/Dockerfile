@@ -10,6 +10,6 @@ WORKDIR /app
 
 RUN npm install
 
-CMD [ "nodemon", "-L", "lunch.js" ]
-CMD [ "nodemon", "-L", "stock.js" ]
+CMD [ "nodemon", "-L", "run.js" ]
+
 
