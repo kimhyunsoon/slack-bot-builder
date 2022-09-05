@@ -10,4 +10,4 @@ WORKDIR /app
 
 RUN npm install
 
-CMD [ "pm2", "run.js" ]
+CMD [ "pm2", "start", "run.js" ]
