@@ -22,6 +22,6 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-slack-key.js
-/chart
-run.sh
+chart/
+config/
+data/
