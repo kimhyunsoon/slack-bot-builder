@@ -3,4 +3,4 @@ services:
   node:
     image: slack-bot
 networks:
-  slack-bot-backend:
+  backend:
