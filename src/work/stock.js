@@ -1,12 +1,13 @@
 import { WebClient } from '@slack/web-api';
-import schedule from 'node-schedule';
 import moment from 'moment';
 import cheerio from 'cheerio';
 import axios from "axios";
-import slack from './slack-key.js';
+import slack from '../config/slack-key.js'
 import ChartJSImage from 'chart.js-image';
 import { createReadStream } from 'fs';
+import { stockArray } from '../data/data.js';
 
+const data = stockArray;
 const web = new WebClient(slack.stock.bot_token);
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
@@ -26,42 +27,6 @@ const priceToString = (price) => {
   return `${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원`;
 }; 
 
-const data = [
-  {
-    name: 'CMA계좌',
-    stocks: [
-      {
-        code: '005930',
-        name: '삼성전자',
-        average: 72500,
-        cnt: 20,
-      },
-      {
-        code: '005930',
-        name: '삼성전자(고모)',
-        average: 57500,
-        cnt: 18,
-      },
-    ]
-  },
-  {
-    name: '연금저축계좌',
-    stocks: [
-      {
-        code: '133690',
-        name: 'TIGER 미국나스닥100',
-        average: 67605,
-        cnt: 103,
-      },
-      {
-        code: '360750',
-        name: 'TIGER 미국S&P500',
-        average: 11485,
-        cnt: 545,
-      },
-    ]
-  },
-]
 const getPresentPrice = async (code) => {
   try {
     const html = await axios.get(`https://finance.naver.com/item/main.naver?code=${code}`);
@@ -74,7 +39,7 @@ const getPresentPrice = async (code) => {
   }
 };
 
-const sendMsg = async () => {
+const sendStock = async () => {
   let msg = '';
   let logMsg = '';
   for (let i = 0; i < data.length; i += 1) {
@@ -399,12 +364,9 @@ const sendChart = async () => {
   }
 }
 
-const sendMsgWork = schedule.scheduleJob('0 0 9-16 * * MON-FRI', async () => {
-  sendMsg();
-});
-const makeChartWork = schedule.scheduleJob('0 1 16 * * FRI', async () => {
-  makeChart();
-});
-const sendChartWork = schedule.scheduleJob('0 2 16 * * FRI', async () => {
-  sendChart();
-});
+export {
+  sendStock,
+  makeChart,
+  sendChart,
+};
+
