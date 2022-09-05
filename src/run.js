@@ -6,7 +6,7 @@ import { sendStock, makeChart, sendChart } from './work/stock.js';
 const sendLunchWork = schedule.scheduleJob('0 0 11 * * MON-FRI', async () => {
   await sendLunch();
 });
-const sendStockgWork = schedule.scheduleJob('* * 9-16 * * MON-FRI', async () => {
+const sendStockgWork = schedule.scheduleJob('0 0 9-16 * * MON-FRI', async () => {
   await sendStock();
 });
 const makeChartWork = schedule.scheduleJob('0 1 16 * * FRI', async () => {
