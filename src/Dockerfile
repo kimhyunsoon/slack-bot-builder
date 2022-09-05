@@ -2,7 +2,7 @@ FROM node:16.13
 
 RUN apt-get update
 
-RUN npm install -g nodemon
+RUN npm install -g pm2
 
 COPY ./ /app/
 
@@ -10,6 +10,4 @@ WORKDIR /app
 
 RUN npm install
 
-CMD [ "nodemon", "-L", "run.js" ]
-
-
+CMD [ "pm2", "run.js" ]
