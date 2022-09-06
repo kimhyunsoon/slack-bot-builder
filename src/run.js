@@ -15,4 +15,3 @@ const makeChartWork = schedule.scheduleJob('0 1 16 * * FRI', async () => {
 const sendChartWork = schedule.scheduleJob('0 2 16 * * FRI', async () => {
   sendChart();
 });
-sendLunch();
