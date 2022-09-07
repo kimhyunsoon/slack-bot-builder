@@ -30,4 +30,5 @@ const test = schedule.scheduleJob('0 * 9-16 * * MON-FRI', async () => {
   };
   log.info('test');
 });
+sendStock();
 
