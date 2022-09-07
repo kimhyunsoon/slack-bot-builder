@@ -1,35 +1,35 @@
-import schedule from 'node-schedule';
+import cron from 'node-cron';
 import { sendLunch } from './work/lunch.js';
 import { sendStock, makeChart, sendChart } from './work/stock.js';
 import moment from 'moment';
 
+const days = ['일', '월', '화', '수', '목', '금', '토'];
+const log = {
+  error: async (msg) => {
+    let date = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+    console.error(`#error::${date} ${days[moment().day()]}요일 [ ${msg} ]`);
+  },
+  info: async (msg) => {
+    let date = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+    console.log(`#info::${date} ${days[moment().day()]}요일 [ ${msg} ]`);
+  }
+};
 
-const sendLunchWork = schedule.scheduleJob('0 0 11 * * MON-FRI', async () => {
-  sendLunch();
+
+const sendLunchWork = cron.schedule('0 0 11 * * MON-FRI', async () => {
+  await sendLunch();
 });
-const sendStockgWork = schedule.scheduleJob('0 0 9-16 * * MON-FRI', async () => {
-  sendStock();
+const sendStockgWork = cron.schedule('0 0 9-16 * * MON-FRI', async () => {
+  await sendStock();
 });
-const makeChartWork = schedule.scheduleJob('0 1 16 * * FRI', async () => {
-  makeChart();
+const makeChartWork = cron.schedule('0 1 16 * * FRI', async () => {
+  await makeChart();
 });
-const sendChartWork = schedule.scheduleJob('0 2 16 * * FRI', async () => {
-  sendChart();
+const sendChartWork = cron.schedule('0 2 16 * * FRI', async () => {
+  await sendChart();
 });
 
-const test = schedule.scheduleJob('0 * 9-16 * * MON-FRI', async () => {
-  const days = ['일', '월', '화', '수', '목', '금', '토'];
-  const log = {
-    error: (msg) => {
-      let date = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-      console.error(`#error::${date} ${days[moment().day()]}요일 [ ${msg} ]`);
-    },
-    info: (msg) => {
-      let date = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-      console.log(`#info::${date} ${days[moment().day()]}요일 [ ${msg} ]`);
-    }
-  };
-  log.info('test');
+const test = cron.schedule('0 * 9-16 * * MON-FRI', async () => {
+  await log.info('test');
+  await sendStock();
 });
-sendStock();
-
