@@ -18,6 +18,7 @@ const sendChartWork = schedule.scheduleJob('0 2 16 * * FRI', async () => {
 });
 
 const test = schedule.scheduleJob('0 * 9-16 * * MON-FRI', async () => {
+  const days = ['일', '월', '화', '수', '목', '금', '토'];
   const log = {
     error: (msg) => {
       let date = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
